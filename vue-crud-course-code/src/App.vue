@@ -1,20 +1,16 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { ref } from 'vue'
+import AppHeader from '@/components/AppHeader.vue'
+import AppContent from '@/components/AppContent.vue'
+import AppFooter from '@/components/AppFooter.vue'
+
+const headerTitle = ref("Vue Project (Dynamic)")
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <AppHeader v-bind:title="headerTitle"></AppHeader>
+  <AppContent></AppContent>
+  <AppFooter></AppFooter>
 </template>
 
 <style scoped>
