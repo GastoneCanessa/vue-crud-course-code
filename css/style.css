@@ -129,3 +129,12 @@ footer {
   border-top: 1px solid #88BBD6;
   padding: 10px;
 }
+
+.searchTitleNormal {
+  font-weight: 400;
+}
+
+.searchTitleBold {
+  font-weight: 600;
+  color: darkgreen;
+}
