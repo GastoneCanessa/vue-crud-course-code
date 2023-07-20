@@ -6,7 +6,8 @@ const footerMessage = ref('TestDriven.io')
 
 <template>
   <footer>
-    <h4>{{ footerMessage }}</h4>
+    <p><slot name="message">Default Footer</slot></p>
+    <p><slot name="link"></slot></p>
   </footer>
 </template>
 

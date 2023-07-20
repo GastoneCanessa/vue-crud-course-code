@@ -7,7 +7,9 @@ describe('AppContent.vue Test', () => {
     // render the component
     const wrapper = shallowMount(AppContent)
 
-    // check that the title is rendered
-    expect(wrapper.vm.message).toMatch('Content goes here!')
+   // check that the heading text is rendered
+   const heading = wrapper.findAll('h1')
+   expect(heading.length).toEqual(1)
+   expect(heading[0].text()).toMatch('List of Users:')
   })
 })

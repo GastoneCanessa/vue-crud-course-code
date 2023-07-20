@@ -10,7 +10,10 @@ const headerTitle = ref("Vue Project (Dynamic)")
 <template>
   <AppHeader v-bind:title="headerTitle"></AppHeader>
   <AppContent></AppContent>
-  <AppFooter></AppFooter>
+  <AppFooter>
+    <template v-slot:message>Vue Project from TestDriven.io Course</template>
+    <template v-slot:link><a href="https://testdriven.io">TestDriven.io</a></template>
+  </AppFooter>
 </template>
 
 <style scoped>
