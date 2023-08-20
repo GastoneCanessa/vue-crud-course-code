@@ -4,6 +4,9 @@ import ListUsers from './ListUsers.vue'
 import AddNewUser from './AddNewUser.vue'
 import Banner from './Banner.vue'
 import axios from 'axios'
+import { useBannerStore } from '@/stores/banner'
+
+const store = useBannerStore()
 
 // ----
 // Data
@@ -16,11 +19,6 @@ const message = ref('List of Users:')
 //  * username: string
 //  * email: string
 const users = ref([])
-
-// Message to display on banner
-const messageToDisplay = ref('')
-// Message type (Info, Success, or Error) to display on banner
-const messageType = ref('Info')
 
 // Largest index of the users array to use when adding a new user
 const largestUserIndex = ref(0)
@@ -44,8 +42,7 @@ const createNewUser = (user) => {
     axios.post('https://jsonplaceholder.typicode.com/users', newUser)
       .then((response) => {
         // handle success
-        messageType.value = 'Success'
-        messageToDisplay.value = 'SUCCESS! User data was saved!'
+        store.setBannerData('SUCCESS! User data was saved!', 'Success')
 
         // Add the user to the local array of users
         users.value.push(newUser)
@@ -55,8 +52,7 @@ const createNewUser = (user) => {
       })
       .catch((error) => {
         // handle error
-        messageType.value = 'Error'
-        messageToDisplay.value = 'ERROR! Unable to save user data!'
+        store.setBannerData('ERROR! Unable to save user data!', 'Error')
         console.log(error)
       })
       .finally((response) => {
@@ -64,11 +60,6 @@ const createNewUser = (user) => {
         console.log('HTTP POST Finished!')
       })
   }
-}
-
-const clearMessage = () => {
-  messageToDisplay.value = ''
-  messageType.value = 'Info'
 }
 
 const deleteUser = (user) => {
@@ -79,16 +70,14 @@ const deleteUser = (user) => {
   axios.delete('https://jsonplaceholder.typicode.com/users/' + user.id)
     .then((response) => {
       // handle success
-      messageType.value = 'Success'
-      messageToDisplay.value = 'SUCCESS! User #' + user.id + ' was deleted!'
+      store.setBannerData('SUCCESS! User #' + user.id + ' was deleted!', 'Success')
 
       // Delete the user from the local array of users
       users.value.splice(userIndex, 1)
     })
     .catch((error) => {
       // handle error
-      messageType.value = 'Error'
-      messageToDisplay.value = 'ERROR! Unable to delete user #' + user.id + '!'
+      store.setBannerData('ERROR! Unable to delete user #' + user.id + '!', 'Error')
       console.log(error)
     })
     .finally((response) => {
@@ -115,8 +104,7 @@ const updateUser = (user) => {
   axios.put('https://jsonplaceholder.typicode.com/users/' + user.id)
     .then((response) => {
       // handle success
-      messageType.value = 'Success'
-      messageToDisplay.value = 'SUCCESS! User #' + user.id + ' was updated!'
+      store.setBannerData('SUCCESS! User #' + user.id + ' was updated!', 'Success')
       console.log(user)
 
       // Update the user in the local array of users
@@ -126,8 +114,7 @@ const updateUser = (user) => {
     })
     .catch((error) => {
       // handle error
-      messageType.value = 'Error'
-      messageToDisplay.value = 'ERROR! Unable to update user #' + user.id + '!'
+      store.setBannerData('ERROR! Unable to update user #' + user.id + '!', 'Error')
       console.log(error)
     })
     .finally((response) => {
@@ -149,8 +136,7 @@ onMounted(async () => {
   axios.get('https://jsonplaceholder.typicode.com/users')
     .then((response) => {
       // handle success
-      messageType.value = 'Success'
-      messageToDisplay.value = 'SUCCESS! Loaded user data!'
+      store.setBannerData('SUCCESS! Loaded user data!', 'Success')
       console.log('Received response.data:')
       console.log(response.data)
 
@@ -164,8 +150,7 @@ onMounted(async () => {
     })
     .catch((error) => {
       // handle error
-      messageType.value = 'Error'
-      messageToDisplay.value = 'ERROR! Unable to load user data!'
+      store.setBannerData('ERROR! Unable to load user data!', 'Error')
     })
     .finally((response) => {
       // always executed
@@ -182,7 +167,7 @@ onUnmounted(() => {
 
 <template>
     <main>
-        <Banner v-bind:bannerMessage="messageToDisplay" v-bind:bannerType="messageType" v-on:clearBanner="clearMessage"></Banner>
+        <Banner></Banner>
         <AddNewUser v-on:createUser="createNewUser"></AddNewUser>
         <h1>{{ message }}</h1>
         <ListUsers v-bind:users="users" v-on:deleteUser="deleteUser" v-on:updateUser="updateUser"></ListUsers>

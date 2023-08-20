@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onBeforeMount, onMounted, onBeforeUnmount, onUnmounted } from 'vue'
 import AppHeader from '@/components/AppHeader.vue'
-import AppContent from '@/components/AppContent.vue'
+import { RouterView } from 'vue-router'
 import AppFooter from '@/components/AppFooter.vue'
 
 const headerTitle = ref("Vue Project (Dynamic)")
@@ -25,7 +25,7 @@ onUnmounted(() => {
 
 <template>
   <AppHeader v-bind:title="headerTitle"></AppHeader>
-  <AppContent></AppContent>
+  <RouterView />
   <AppFooter>
     <template v-slot:message>Vue Project from TestDriven.io Course</template>
     <template v-slot:link><a href="https://testdriven.io">TestDriven.io</a></template>

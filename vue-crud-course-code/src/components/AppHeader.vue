@@ -1,6 +1,5 @@
 <script setup>
-    // import { ref } from '@vue/reactivity'
-    // const title = ref('Vue Project')
+    import { RouterLink } from 'vue-router'
     const props = defineProps({
         title: {type: String, required: true}
     })
@@ -13,9 +12,9 @@
         </div>
         <nav>
             <ul>
-                <li>Home</li>
-                <li>About</li>
-                <li>Contact</li>
+                <li><RouterLink to="/">Home</RouterLink></li>
+                <li><RouterLink to="/about">About</RouterLink></li>
+                <li><RouterLink to="/blog">Blog</RouterLink></li>
             </ul>
         </nav>
     </header>
@@ -48,6 +47,28 @@
     display: inline-block;
     padding-left: 1em;
     font-size: 1.5em;
+    }
+
+    nav li a {
+    text-decoration: none;
+    }
+
+    nav li a:visited {
+    color: black;
+    }
+
+    nav li a.router-link-exact-active {
+    position: relative;
+    }
+
+    nav li a.router-link-exact-active:after {
+    position: absolute;
+    content: '';
+    height: 3px;
+    left: 0;
+    bottom: -10px;
+    background: white;
+    width: 100%;
     }
 
     @media screen and (max-width: 700px) {

@@ -1,13 +1,20 @@
 import { describe, it, expect } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import AppHeader from '../AppHeader.vue'
+import router from '@/router/index'
 
 describe('AppHeader.vue Test', () => {
-    it('renders message when component is created', () => {
+    it('renders message when component is created', async () => {
+        // push the '/' link to Vue Router to load the Home page
+        await router.push("/")
+
         // render the component
-        const wrapper = shallowMount(AppHeader, {
+        const wrapper = mount(AppHeader, {
             propsData: {
                 title: 'Vue Project'
+            },
+            global: {
+              plugins: [router]
             }
         })
         
@@ -19,6 +26,6 @@ describe('AppHeader.vue Test', () => {
         expect(items.length).toEqual(3)
         expect(items[0].text()).toMatch('Home')
         expect(items[1].text()).toMatch('About')
-        expect(items[2].text()).toMatch('Contact')
+        expect(items[2].text()).toMatch('Blog')
     })
 })
